@@ -2,12 +2,13 @@
   <artifact type="exploded-war" name="JSPex2:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/JSPex2_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="JSPex2/web/웹" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="JSPex2" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="JSPex2/web/웹" />
+      <element id="javaee-facet-resources" facet="JSPex2/javaeeApplication/javaEEApplication" />
     </root>
   </artifact>
 </component>

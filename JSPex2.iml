@@ -9,6 +9,7 @@
         <webroots>
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
+        <sourceRoots />
       </configuration>
       <facet type="webservices" name="WebServices">
         <configuration ws.engine="Apache Axis" />
@@ -24,9 +25,14 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="JSPex2" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
+    </facet>
+    <facet type="WebServicesClient" name="WebServices 클라이언트">
+      <configuration ws.engine="Apache Axis" />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
