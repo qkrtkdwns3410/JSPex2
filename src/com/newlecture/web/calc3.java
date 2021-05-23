@@ -1,6 +1,9 @@
 package com.newlecture.web;
 
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,14 +28,19 @@ public class calc3 extends HttpServlet {
         
         if (cookies != null) {
             for (Cookie c : cookies) {
-                if (c.getName().equals("op")) {
+                if (c.getName().equals("exp")) {
                     exp = c.getValue();
                     break;
                 }
             }
         }
         if (operator != null && operator.equals("=")) {
-        
+            ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+            try {
+                exp = String.valueOf(engine.eval(exp));
+            } catch (ScriptException e) {
+                e.printStackTrace();
+            }
         } else {
             exp += (value == null) ? "" : value;
             exp += (operator == null) ? "" : operator;
