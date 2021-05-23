@@ -1,7 +1,8 @@
 package com.newlecture.web;
 
-
-import javax.servlet.ServletContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -10,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-@WebServlet("/calcpage")
-public class CalcPage extends HttpServlet {
+@WebServlet("/calculator")
+public class Calculator extends HttpServlet {
     @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
         
         String exp = "0";
@@ -55,7 +53,7 @@ public class CalcPage extends HttpServlet {
         out.write("</style>");
         out.write("</head>");
         out.write("<body>");
-        out.write("<form action=\"calc3\" method=\"post\">");
+        out.write("<form  method=\"post\">");
         out.write(" <table>");
         out.write("   <tr>");
         out.printf("          <td class=\"output\" colspan=\"4\">%s</td>", exp);
@@ -98,8 +96,54 @@ public class CalcPage extends HttpServlet {
         out.write("</form>");
         out.write("</body>");
         out.write("</html>");
+        
+        
     }
     
     
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+        
+        String value = request.getParameter("value");
+        String operator = request.getParameter("operator");
+        String dot = request.getParameter("dot");
+        
+        String exp = "";
+        
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("exp")) {
+                    exp = c.getValue();
+                    break;
+                }
+            }
+        }
+        if (operator != null && operator.equals("=")) {
+            ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+            try {
+                exp = String.valueOf(engine.eval(exp));
+            } catch (ScriptException e) {
+                e.printStackTrace();
+            }
+        } else if (operator != null && operator.equals("C")) {
+            exp = "";
+            
+        } else {
+            exp += (value == null) ? "" : value;
+            exp += (operator == null) ? "" : operator;
+            exp += (dot == null) ? "" : dot;
+            
+        }
+        
+        
+        Cookie expCookie = new Cookie("exp", exp);
+        if (operator != null && operator.equals("C")) {
+            expCookie.setMaxAge(0);
+        }
+        expCookie.setPath("/calculator"); //쿠키를 쓰는놈에게만 전달가능합니다.
+        response.addCookie(expCookie);
+        response.sendRedirect("calculator");
+        
+    }
 }
-
