@@ -47,5 +47,6 @@
     <orderEntry type="library" name="tomcat:servlet:4.1.36" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="Maven: javax:javaee-web-api:8.0.1" level="project" />
+    <orderEntry type="library" name="ojdbc8" level="project" />
   </component>
 </module>
