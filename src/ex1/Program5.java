@@ -2,6 +2,7 @@ package ex1;
 
 import com.newlecture.app.console.NoticeConsole;
 
+import javax.servlet.annotation.WebServlet;
 import java.sql.SQLException;
 
 public class Program5 {
