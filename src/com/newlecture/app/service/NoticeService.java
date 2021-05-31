@@ -3,6 +3,8 @@ package com.newlecture.app.service;
 import com.neclecture.app.entity.Notice;
 import com.sun.xml.internal.ws.util.NoCloseInputStream;
 
+import javax.xml.stream.events.EndDocument;
+import javax.xml.stream.events.StartDocument;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,14 +16,19 @@ public class NoticeService {
     private String pwd = "3410";
     private String driver = "oracle.jdbc.driver.OracleDriver";
     
-    public List<Notice> getList() throws SQLException, ClassNotFoundException {
+    public List<Notice> getList(int page) throws SQLException, ClassNotFoundException {
         
-        String sql = "SELECT * FROM NOTICE";
+        int Start = 1 + (page - 1) * 10;
+        int end = 10 * page;
+        
+        String sql = "SELECT *  FROM NOTICE_VIEW WHERE NUM BETWEEN ? AND ?";
         
         Class.forName(driver);
         Connection con = DriverManager.getConnection(url, uid, pwd);
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, Start);
+        st.setInt(2, end);
+        ResultSet rs = st.executeQuery();
         
         List<Notice> list = new ArrayList<Notice>();
         
@@ -31,7 +38,7 @@ public class NoticeService {
             String writerId = rs.getString("WRITER_ID");
             Date regDate = rs.getDate("REGDATE");
             String content = rs.getString("CONTENT");
-            int hit = rs.getInt("hit");
+            int hit = rs.getInt("HIT");
             String files = rs.getString("FILES");
             Notice notice = new Notice(id, title, writerId, regDate, content, hit, files);
             list.add(notice);
@@ -80,5 +87,31 @@ public class NoticeService {
     
     public int delete(int id) {
         return 0;
+    }
+    
+    
+    //Scalar값을 얻어오는 함수입니다.
+    public int getCount() throws SQLException, ClassNotFoundException {
+        int count = 0;
+        
+        String sql = "SELECT  COUNT(ID) COUNT  FROM NOTICE";
+        
+        Class.forName(driver);
+        Connection con = DriverManager.getConnection(url, uid, pwd);
+        Statement st = con.createStatement();
+        
+        ResultSet rs = st.executeQuery(sql);
+        
+        List<Notice> list = new ArrayList<Notice>();
+        
+        if(rs.next())
+            count = rs.getInt("COUNT");
+        
+        
+        rs.close();
+        st.close();
+        con.close();
+        
+        return count;
     }
 }

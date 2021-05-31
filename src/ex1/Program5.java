@@ -7,6 +7,8 @@ import java.sql.SQLException;
 public class Program5 {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         NoticeConsole console = new NoticeConsole();
+        int page;
+        
         
         EXIT:
         while (true) {
@@ -16,9 +18,11 @@ public class Program5 {
             switch (menu) {
                 case 1:     //상세조회
                     break;
-                case 2:    //이전
+                case 2:    //이전:
+                    console.movePrevList();
                     break;
-                case 3:    //다음
+                case 3:    //다음:
+                    console.moveNextList();
                     break;
                 case 4: //글쓰기
                     break;
