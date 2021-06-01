@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @WebServlet("/notice/list")
@@ -17,9 +19,13 @@ public class NoticeListController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Notice> list = new ArrayList<>();
+        
+        String url = "jdbc:oracle:thin:@localhost:1521/XE";
+        String sql = "SELECT * FROM NOTICE";
+        
+        
         try {
-            String url = "jdbc:oracle:thin:@localhost:1521/XE";
-            String sql = "SELECT * FROM NOTICE";
             
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = DriverManager.getConnection(url, "SYSTEM", "3410");
@@ -35,7 +41,7 @@ public class NoticeListController extends HttpServlet {
                 String hit = rs.getString("HIT");
                 String files = rs.getString("FILES");
                 String content = rs.getString("CONTENT");
-                
+    
                 Notice notice = new Notice(
                         id,
                         title,
@@ -45,7 +51,7 @@ public class NoticeListController extends HttpServlet {
                         files,
                         content
                 );
-                
+                list.add(notice);
             }
             
             rs.close();
@@ -56,8 +62,8 @@ public class NoticeListController extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        
-        
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("/WEB-INF/notice/list.jsp").forward(request, response);
     }
 }
 
