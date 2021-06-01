@@ -1,7 +1,7 @@
 package com.newlecture.app.console;
 
-import com.neclecture.app.entity.Notice;
 import com.newlecture.app.service.NoticeService;
+import com.newlecture.web.entity.Notice;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -33,7 +33,7 @@ public class NoticeConsole {
         System.out.println("----------------------------");
         
         for (Notice n : list) {
-            System.out.printf("%d.   %s / %s /  %s\n", n.getId(), n.getTitle(), n.getWriterId(), n.getRegDate());
+            System.out.printf("%d.   %s / %s /  %s\n", n.getId(), n.getTitle(), n.getWriterId(), n.getRegdate());
         }
         System.out.println("----------------------------");
         System.out.printf("                    %d/%d pages\n", page, lastPage);

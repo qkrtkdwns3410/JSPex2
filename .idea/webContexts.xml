@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/web/index.html" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/notice/detail.jsp" value="file://$PROJECT_DIR$/web/notice" />
         <entry key="file://$PROJECT_DIR$/web/notice/list.jsp" value="file://$PROJECT_DIR$/web/notice" />
       </map>
     </option>

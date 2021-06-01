@@ -12,6 +12,7 @@
     Connection con = DriverManager.getConnection(url, "SYSTEM", "3410");
     PreparedStatement st = con.prepareStatement(sql);//미리 쿼리문을 준비합니다.
     st.setInt(1, id);
+    
     ResultSet rs = st.executeQuery();
     
     rs.next();
@@ -179,33 +180,34 @@
                     <tr>
                         <th>제목</th>
                         <td class="text-align-left text-indent text-strong text-orange"
-                            colspan="3"><%=title%>
+                            colspan="3">${n.title}
                         </td>
                     </tr>
                     <tr>
                         <th>작성일</th>
-                        <td class="text-align-left text-indent" colspan="3"><%=regdate%>
+                        <td class="text-align-left text-indent" colspan="3">${n.regdate}
                         </td>
                     </tr>
                     <tr>
                         <th>작성자</th>
                         <td>
-                            <%=writerId%>
+                            ${n.writerId}
                         </td>
+                        
                         <th>조회수</th>
                         <td>
-                            <%=hit%>
+                            ${n.hit}
                         </td>
                     </tr>
                     <tr>
                         <th>첨부파일</th>
                         <td colspan="3">
-                            <%=files%>
+                            ${n.files}
                         </td>
                     </tr>
                     <tr class="content">
                         <td colspan="4">
-                            <%=content%>
+                            ${n.content}
                         </td>
                     </tr>
                     </tbody>

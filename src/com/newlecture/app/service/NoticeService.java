@@ -1,10 +1,7 @@
 package com.newlecture.app.service;
 
-import com.neclecture.app.entity.Notice;
-import com.sun.xml.internal.ws.util.NoCloseInputStream;
+import com.newlecture.web.entity.Notice;
 
-import javax.xml.stream.events.EndDocument;
-import javax.xml.stream.events.StartDocument;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,9 +37,9 @@ public class NoticeService {
             String writerId = rs.getString("WRITER_ID");
             Date regDate = rs.getDate("REGDATE");
             String content = rs.getString("CONTENT");
-            int hit = rs.getInt("HIT");
+            String hit = rs.getString("HIT");
             String files = rs.getString("FILES");
-            Notice notice = new Notice(id, title, writerId, regDate, content, hit, files);
+            Notice notice = new Notice(id,title,regDate,writerId,hit,files,content);
             list.add(notice);
         }
         rs.close();
